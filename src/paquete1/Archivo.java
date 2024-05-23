@@ -15,6 +15,16 @@ public class Archivo
     private int tamanio;
     private String ruta;
 
+    /**
+     * 
+     * @param nomre nombre del archivo
+     * @param extension extension 
+     * @param fecha fecha 
+     * @param autor
+     * @param tipo
+     * @param tamanio
+     * @param ruta 
+     */
     public Archivo(String nomre, String extension, String fecha, String autor, char tipo, int tamanio, String ruta)
     {
         this.nomre = nomre;
@@ -136,6 +146,12 @@ public class Archivo
     public void setRuta(String ruta)
     {
         this.ruta = ruta;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Archivo{" + "nomre=" + nomre + ", extension=" + extension + ", fecha=" + fecha + ", autor=" + autor + ", tipo=" + tipo + ", tamanio=" + tamanio + ", ruta=" + ruta + '}';
     }
     
     

@@ -199,6 +199,11 @@ public class ListaCDL
         lista.inserta(nodo3);
         lista.inserta(nodo4);
         lista.inserta(nodo5);
+        lista.elimina("E");
+        lista.elimina("B");
+        lista.elimina("A");
+        lista.elimina("D");
+        lista.elimina("C");
         System.out.println(lista.desp());
     }
 
