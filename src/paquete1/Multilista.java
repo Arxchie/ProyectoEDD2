@@ -83,6 +83,7 @@ public class Multilista
         obj.setR(r);
         return obj.busca(s);
     }
+   
 
     private String desp(Nodo r, String saltos)
     {

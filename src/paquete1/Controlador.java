@@ -11,9 +11,9 @@ import java.util.ArrayList;
 public class Controlador
 {
 
-    static Nodo<Archivo> nodoActual;
     static ArrayList<String> rutaActual = new ArrayList<>();
     static Multilista m = new Multilista();
+    static Nodo<Archivo> nodoActual;
 
     public static Archivo creaArchivo(String nombreExtension, char tipo, String ruta)
     {
@@ -50,20 +50,32 @@ public class Controlador
 
     public static void altaArchivo(Nodo<Archivo> nodo)
     {
-
-        String[] array = new String[rutaActual.size()+1];
+        String[] array = new String[rutaActual.size() + 1];
         array = rutaActual.toArray(array);
         m.inserta(nodo, array);
         array = null;
-
     }
 
-    public static void recorre(Nodo<Archivo> r, String ruta[], int entrar)
+    public static void entrarA(String nombre)
     {
-        if (entrar == 1)
+        if (nodoActual != null)
         {
-            r.getAbajo();
+            nodoActual = nodoActual.getAbajo();
+            Nodo buscado = m.busca(nodoActual, nombre);
+            if (buscado != null)
+            {
+                rutaActual.add(nombre);
+                nodoActual = buscado;
+            } else
+            {
+                System.out.println("no encontrado");
+            }
+        } else
+        {
+            rutaActual.add(nombre);
+            nodoActual = m.getR();
         }
+
     }
 
     public static String[] separa(String texto)
@@ -104,11 +116,16 @@ public class Controlador
     {
 
         altaArchivo(creaNodoArchivo(creaArchivo("documentos", 'C', rutaAString())));
-        rutaActual.add("documentos");
-        Archivo nvo=creaArchivo("archivo1.pdf", 'A', rutaAString());
+        entrarA("documentos");
+        System.out.println("ruta actual  " + rutaAString());
+        Archivo nvo = creaArchivo("archivo1.pdf", 'A', rutaAString());
         altaArchivo(creaNodoArchivo(nvo));
-        System.out.println(nvo.toString());
-
+        altaArchivo(creaNodoArchivo(creaArchivo("carpeta", 'C', rutaAString())));
+        entrarA("carpeta");
+        Archivo nvo2 = creaArchivo("archivo2.txt", 'A', rutaAString());
+        altaArchivo(creaNodoArchivo(nvo2));
+        System.out.println("ruta actual  " + rutaAString());
+        System.out.println(nvo2.toString());
         m.desp2();
 
     }
