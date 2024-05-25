@@ -50,32 +50,49 @@ public class Controlador
 
     public static void altaArchivo(Nodo<Archivo> nodo)
     {
-        String[] array = new String[rutaActual.size() + 1];
-        array = rutaActual.toArray(array);
-        m.inserta(nodo, array);
-        array = null;
+        if (nodoActual != null)
+        {
+            if (m.busca(nodoActual, nodo.getEtiqueta()) != null)
+            {
+                System.out.println("Ya hay un archivo con ese nombre");
+            } else
+            {
+                String[] array = new String[rutaActual.size() + 1];
+                array = rutaActual.toArray(array);
+                m.inserta(nodo, array);
+                array = null;
+
+            }
+        } else
+        {
+            String[] array = new String[rutaActual.size() + 1];
+            array = rutaActual.toArray(array);
+            m.inserta(nodo, array);
+            array = null;
+        }
+
     }
 
     public static void entrarA(String nombre)
     {
-        if (nodoActual != null)
+
+        Nodo buscado;
+        if (nodoActual == null)
         {
-            nodoActual = nodoActual.getAbajo();
-            Nodo buscado = m.busca(nodoActual, nombre);
-            if (buscado != null)
-            {
-                rutaActual.add(nombre);
-                nodoActual = buscado;
-            } else
-            {
-                System.out.println("no encontrado");
-            }
+            buscado = m.busca(m.getR(), nombre);
         } else
         {
-            rutaActual.add(nombre);
-            nodoActual = m.getR();
+            nodoActual = nodoActual.getAbajo();
+            buscado = m.busca(nodoActual, nombre);
         }
-
+        if (buscado != null)
+        {
+            rutaActual.add(nombre);
+            nodoActual = buscado;
+        } else
+        {
+            System.out.println("no encontrado");
+        }
     }
 
     public static String[] separa(String texto)
@@ -116,14 +133,21 @@ public class Controlador
     {
 
         altaArchivo(creaNodoArchivo(creaArchivo("documentos", 'C', rutaAString())));
+        altaArchivo(creaNodoArchivo(creaArchivo("documentos2", 'C', rutaAString())));
         entrarA("documentos");
-        System.out.println("ruta actual  " + rutaAString());
         Archivo nvo = creaArchivo("archivo1.pdf", 'A', rutaAString());
         altaArchivo(creaNodoArchivo(nvo));
         altaArchivo(creaNodoArchivo(creaArchivo("carpeta", 'C', rutaAString())));
-        entrarA("carpeta");
+        altaArchivo(creaNodoArchivo(creaArchivo("carpeta2", 'C', rutaAString())));
+        System.out.println("NO: " + nodoActual.getEtiqueta());
+        System.out.println(rutaActual);
+        entrarA("carpeta2");
+        System.out.println("nodoooo: " + nodoActual.getEtiqueta());
         Archivo nvo2 = creaArchivo("archivo2.txt", 'A', rutaAString());
         altaArchivo(creaNodoArchivo(nvo2));
+        altaArchivo(creaNodoArchivo(creaArchivo("carpeta3", 'C', rutaAString())));
+        entrarA("carpeta3");
+        altaArchivo(creaNodoArchivo(creaArchivo("arc.txt", 'A', rutaAString())));
         System.out.println("ruta actual  " + rutaAString());
         System.out.println(nvo2.toString());
         m.desp2();
